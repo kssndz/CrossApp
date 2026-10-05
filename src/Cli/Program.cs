@@ -1,14 +1,52 @@
-﻿
-using System.Runtime.InteropServices;
- Console.WriteLine("CrossApp – практикум з крос-платформного програмування");
-Console.WriteLine("Студент: Бухно Ангеліна, група ФЕІ-31");
-Console.WriteLine(new string('-', 52));
-Console.WriteLine($"ОС (OSDescription) : {RuntimeInformation.OSDescription}");
-Console.WriteLine($"ОС (Environment) : {Environment.OSVersion}");
-Console.WriteLine($"Архітектура процесу : {RuntimeInformation.ProcessArchitecture}");
-Console.WriteLine($"Версія .NET (CLR) : {Environment.Version}");
-Console.WriteLine($"Runtime : {RuntimeInformation.FrameworkDescription}");
-Console.WriteLine($"Каталог застосунку : {AppContext.BaseDirectory}");
-Console.WriteLine($"Поточний каталог : {Environment.CurrentDirectory}");
-Console.WriteLine(new string('-', 52));
-Console.WriteLine(" Замовлення. (клієнти, товари, замовлення)");
+﻿using System.Runtime.InteropServices;
+using System.Text;
+using System.Text.Json;
+
+Console.OutputEncoding = Encoding.UTF8;
+
+var appInfo = new
+{
+    Application = "CrossApp",
+    Description = "практикум з крос-платформного програмування",
+    Student = "Бухно Ангеліна, група ФЕІ-31с",
+    OSDescription = RuntimeInformation.OSDescription,
+    EnvironmentOS = Environment.OSVersion.ToString(),
+    ProcessArchitecture = RuntimeInformation.ProcessArchitecture.ToString(),
+    DotNetVersion = Environment.Version.ToString(),
+    Runtime = RuntimeInformation.FrameworkDescription,
+    ApplicationDirectory = AppContext.BaseDirectory,
+    CurrentDirectory = Environment.CurrentDirectory,
+    Domain = new
+    {
+        Name = "Замовлення",
+        Entities = new[]
+        {
+            "Customer",
+            "Product",
+            "Order",
+            "OrderLine"
+        },
+        Description = "Оформлення замовлень і підрахунок сум"
+    }
+};
+
+if (args.Contains("--json"))
+{
+    var json = JsonSerializer.Serialize(appInfo);
+    Console.WriteLine(json);
+}
+else
+{
+    Console.WriteLine("CrossApp – практикум з крос-платформного програмування");
+    Console.WriteLine("Студентка:Бухно Ангеліна, група ФЕІ - 31с");
+    Console.WriteLine(new string('-', 52));
+    Console.WriteLine($"ОС (OSDescription) : {RuntimeInformation.OSDescription}");
+    Console.WriteLine($"ОС (Environment) : {Environment.OSVersion}");
+    Console.WriteLine($"Архітектура процесу : {RuntimeInformation.ProcessArchitecture}");
+    Console.WriteLine($"Версія .NET (CLR) : {Environment.Version}");
+    Console.WriteLine($"Runtime : {RuntimeInformation.FrameworkDescription}");
+    Console.WriteLine($"Каталог застосунку : {AppContext.BaseDirectory}");
+    Console.WriteLine($"Поточний каталог : {Environment.CurrentDirectory}");
+    Console.WriteLine(new string('-', 52));
+    Console.WriteLine("Предметна область: Замовлення (клієнти, товари, замовлення, рядки замовлень)");
+}
